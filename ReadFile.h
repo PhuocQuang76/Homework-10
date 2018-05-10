@@ -14,13 +14,16 @@
 class ReadFile {
 protected:
     BST *bst;
-    std::string fileName;
+    //std::string fileName;
 
 
 public:
     ReadFile();
     ~ReadFile();
     void *readFile(std::string fileName);
+    void search();
+    void print();
+
 };
 
 

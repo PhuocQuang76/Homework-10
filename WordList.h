@@ -5,8 +5,15 @@
 #ifndef WORDLISTPROJECT10_WORDLIST_H
 #define WORDLISTPROJECT10_WORDLIST_H
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "iostream"
 #include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include "BST.h"
+#include <vector>
 
 class WordList {
 private:
@@ -17,12 +24,16 @@ private:
     };
     node *head;
     node *tail;
+    BST *bst;
+
 public:
     WordList();
     ~WordList();
-    const std::string &getWord() const;
-    void setWord(const std::string &word);
-    void createNode(int line);
+    
+    std::string getWord();
+    void setWord(std::string word);
+    void createLineNode(int line);
+    std::string getLines();
 };
 
 

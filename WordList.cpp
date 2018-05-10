@@ -4,32 +4,52 @@
 
 #include "WordList.h"
 WordList::WordList() {
+    bst = new BST;
     head = nullptr;
     tail = nullptr;
 }
 
 WordList::~WordList() {
-
-}
-
-void WordList::createNode(int value) {
-    node *temp = new node;
-    temp->lineNumber = value;
-    temp->next = nullptr;
-    if(head == nullptr){
-        head = temp;
-        tail = temp;
-        temp = nullptr;
-    }else{
-        tail->next = temp;
-        tail = temp;
+    for(node *currentNode = head; currentNode != nullptr;){
+        node *deleteNode = currentNode;
+        currentNode = currentNode->next;
+        delete deleteNode;
     }
 }
 
-const std::string &WordList::getWord() const {
+void WordList::createLineNode(int line) {
+    node *mynode = new node;
+    mynode->lineNumber = line;
+    mynode->next = nullptr;
+    if(head == nullptr){
+        head = mynode;
+        tail = mynode;
+    }else{
+        tail->next = mynode;
+        tail = mynode;
+    }
+}
+
+std::string WordList::getWord(){
     return word;
 }
 
-void WordList::setWord(const std::string &word) {
+void WordList::setWord(std::string word) {
     WordList::word = word;
 }
+
+std::string WordList::getLines() {
+    //char str[1024];
+    //std::strcpy(str, "");
+    std::string text = "";
+    node *cur = head;
+    while(cur != nullptr){
+        //std::strcat(str, (head->lineNumber)); std::strcat(str, " ");
+        text = text + std::to_string(cur->lineNumber) + ",";
+        cur = cur->next;
+    }
+    std::string removeLastCharString = text.substr(0, text.length()-1);
+    return removeLastCharString;
+}
+
+

@@ -10,26 +10,33 @@
 class BST {
 private:
     struct BstNode{
-        BstNode(const std::string word, int line){
+        BstNode(std::string &word, int &line){
+            wordList = new WordList();
             wordList->setWord(word);
-            wordList->createNode(line);
+            wordList->createLineNode(line);
+            leftNode = nullptr;
+            rightNode = nullptr;
         }
         WordList *wordList;
         BstNode *leftNode, *rightNode;
     };
     BstNode *root;
-
-    WordList recursiveFind(BstNode *node, char searchValue);
-    //void freeBinaryTreePrivate(BstNode *node);
+    void freeBinaryTreePrivate(BstNode *node);
 
 public:
     BST();
     ~BST();
-    void insert(std::string, int);
-    void PrintInOrder(BstNode *prt);
-    //void freeBinaryTree();
+    void insert(std::string word, int line);
+    void compare(BstNode *node, std::string s, int l);
 
+    WordList *searchWord(BstNode *root, std::string searchW);
+    void search(std::string word);
 
+    void printNodeToFile(BstNode *parent,std::ofstream &outFile);
+    void printNodeToScreen(BstNode *parent);
+    void printTreeInOrder();
+
+    void freeBinaryTree();
 };
 
 
