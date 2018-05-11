@@ -12,28 +12,27 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "BST.h"
 #include <vector>
+#include "SinglyLinkedList.h"
+#include "BinaryTree.h"
 
 class WordList {
 private:
     std::string word;
-    struct node{
-        int lineNumber;
-        node *next;
-    };
-    node *head;
-    node *tail;
-    BST *bst;
-
+    SinglyLinkedList *lineList;
+    static BinaryTree<WordList> tree;
 public:
     WordList();
     ~WordList();
     
-    std::string getWord();
-    void setWord(std::string word);
-    void createLineNode(int line);
-    std::string getLines();
+//    std::string getWord();
+//    void setWord(std::string word);
+//    void createLineNode(int line);
+//    std::string getLines();
+    bool operator < (WordList const &wordList);
+    bool operator > (WordList const &wordList);
+    bool operator == (WordList const &wordList);
+    friend std::istream & operator >>(std::istream & in, WordList& WL);
 };
 
 
