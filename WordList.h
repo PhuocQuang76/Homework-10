@@ -13,26 +13,32 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include "Object.h"
 #include "SinglyLinkedList.h"
 #include "BinaryTree.h"
-#include "BinaryTree.cpp"
 
-class WordList {
+class WordList: public Object {
 private:
     std::string *word;
     SinglyLinkedList *lineList;
-    static BinaryTree<WordList> tree;
 public:
     WordList();
+
+    bool operator<(Object const &object) override;
+
+    bool operator>(Object const &object) override;
+
+    bool operator==(Object const &object) override;
+
     ~WordList();
     
 //    std::string getWord();
 //    void setWord(std::string word);
 //    void createLineNode(int line);
 //    std::string getLines();
-    bool operator < (WordList const &wordList);
-    bool operator > (WordList const &wordList);
-    bool operator == (WordList const &wordList);
+//    bool operator < (Object const &wordList);
+//    bool operator > (Object const &wordList);
+//    bool operator == (Object const &wordList);
     friend std::istream & operator >>(std::istream & in, WordList& WL);
 };
 

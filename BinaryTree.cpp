@@ -4,23 +4,22 @@
 
 #include "BinaryTree.h"
 
-template<class T>
-BinaryTree<T> *BinaryTree<T>::traverseNode(BinaryTree<T> *leaf, T newLeaf) {
-    BinaryTree<T> *returnValue;
+BinaryTree::node *BinaryTree::traverseNode(node *leaf, Object *newLeaf) {
+    node *returnValue;
     if (leaf == nullptr) {
-        BinaryTree<T> *newNode = new BinaryTree<T>();
-        newNode->object = &newLeaf;
+        node *newNode = new node();
+        newNode->object = newLeaf;
         returnValue = newNode;
-    } else if (*leaf->object == newLeaf) {
+    } else if (*leaf->object == *newLeaf) {
         returnValue = leaf;
-    } else if (*leaf->object > newLeaf) {
-        BinaryTree<T> *traversedLeaf = traverseNode(leaf->left, newLeaf);
+    } else if (*leaf->object > *newLeaf) {
+        node *traversedLeaf = traverseNode(leaf->left, newLeaf);
         if (leaf->left == nullptr) {
             leaf->left = traversedLeaf;
         }
         returnValue = traversedLeaf;
-    } else if (*leaf->object < newLeaf) {
-        BinaryTree<T> *traversedLeaf = traverseNode(leaf->right, newLeaf);
+    } else if (*leaf->object < *newLeaf) {
+        node *traversedLeaf = traverseNode(leaf->right, newLeaf);
         if (leaf->right == nullptr) {
             leaf->right = traversedLeaf;
         }
@@ -29,11 +28,9 @@ BinaryTree<T> *BinaryTree<T>::traverseNode(BinaryTree<T> *leaf, T newLeaf) {
     return returnValue;
 }
 
-template<class T>
-BinaryTree<T> *BinaryTree<T>::addLeaf(T leaf) {
-    BinaryTree<T> *newNode = traverseNode(root, leaf);
+BinaryTree::node *BinaryTree::addLeaf(Object *leaf) {
     if (root == nullptr) {
-        root = newNode;
+        root = new node();
     }
-    return newNode;
+    return nullptr;
 }

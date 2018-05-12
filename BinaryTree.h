@@ -5,23 +5,23 @@
 #ifndef PROJECT10_BINARYTREE_H
 #define PROJECT10_BINARYTREE_H
 
-#include "WordList.h"
-
-template<class T>
+#include "Object.h"
 
 class BinaryTree {
 protected:
-    static BinaryTree<T> *root;
-    BinaryTree<T> *left;
-    BinaryTree<T> *right;
+    struct node {
+        Object *object;
+        node *left;
+        node *right;
+    };
 
-    BinaryTree<T> *traverseNode(BinaryTree<T> *leaf, T newLeaf);
+    node *root;
 
-    T *object;
+    node *traverseNode(node *leaf, Object *newLeaf);
 
 public:
 
-    BinaryTree<T> *addLeaf(T leaf);
+    node *addLeaf(Object *leaf);
 };
 
 

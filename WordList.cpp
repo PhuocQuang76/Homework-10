@@ -12,23 +12,14 @@ const char CHAR_UCASE_Z = 90;
 const char CHAR_LCASE_A = 97;
 const char CHAR_LCASE_Z = 122;
 
+static BinaryTree *tree;
+
 WordList::WordList() {
+    tree = new BinaryTree();
 }
 
 WordList::~WordList() {
-
-}
-
-bool WordList::operator<(WordList const &wordList) {
-    return false;
-}
-
-bool WordList::operator>(WordList const &wordList) {
-    return false;
-}
-
-bool WordList::operator==(WordList const &wordList) {
-    return false;
+    delete[] tree;
 }
 
 std::istream &operator>>(std::istream &in, WordList &WL) {
@@ -55,7 +46,7 @@ std::istream &operator>>(std::istream &in, WordList &WL) {
                     word = new char[MAX_STRING_LENGTH];
                     WordList *wl = new WordList();
                     wl->word = s;
-                    WL.tree.addLeaf(*wl);
+                    tree->addLeaf(wl);
                     delete[] word;
                 }
                 if (letter == '\n') line++;
@@ -68,6 +59,18 @@ std::istream &operator>>(std::istream &in, WordList &WL) {
 //    }
     std::cout << '\n';
     return in;
+}
+
+bool WordList::operator<(Object const &object) {
+    return Object::operator<(object);
+}
+
+bool WordList::operator>(Object const &object) {
+    return Object::operator>(object);
+}
+
+bool WordList::operator==(Object const &object) {
+    return Object::operator==(object);
 }
 
 
