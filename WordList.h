@@ -15,10 +15,11 @@
 #include <vector>
 #include "SinglyLinkedList.h"
 #include "BinaryTree.h"
+#include "BinaryTree.cpp"
 
 class WordList {
 private:
-    std::string word;
+    std::string *word;
     SinglyLinkedList *lineList;
     static BinaryTree<WordList> tree;
 public:
