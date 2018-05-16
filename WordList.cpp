@@ -4,6 +4,7 @@
 
 #include "WordList.h"
 #include "TreeNode.h"
+#include "Tree.h"
 
 #include <iostream>
 #include <algorithm>

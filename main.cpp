@@ -1,6 +1,5 @@
 #include <iostream>
 #include "WordList.h"
-#include "Tree.h"
 int main() {
 //    ReadFile *readFile = new ReadFile();
 //    readFile->readFile("text-file.txt");

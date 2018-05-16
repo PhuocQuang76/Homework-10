@@ -14,7 +14,6 @@
 #include <fstream>
 #include <vector>
 #include "SinglyLinkedList.h"
-#include "Tree.h"
 //#include "Tree.cpp"
 
 class WordList {
