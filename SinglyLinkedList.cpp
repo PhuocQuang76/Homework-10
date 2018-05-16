@@ -14,11 +14,15 @@ SinglyLinkedList *SinglyLinkedList::getNext() const {
 
 SinglyLinkedList::SinglyLinkedList(int line) {
     SinglyLinkedList::line = line;
+    SinglyLinkedList::next = nullptr;
 }
 
 SinglyLinkedList *SinglyLinkedList::addLine(SinglyLinkedList *node, int line) {
     SinglyLinkedList *newNode = new SinglyLinkedList(line);
-    if (node->next == nullptr) {
+    if (node == nullptr) {
+        //this is the root, most likely.
+        //do nothing
+    } else if (node->next == nullptr) {
         //this is an append assuming the node passed was the tail.
         node->next = newNode;
     } else {

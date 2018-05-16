@@ -1,6 +1,6 @@
 #include <iostream>
 #include "WordList.h"
-
+#include "Tree.h"
 int main() {
 //    ReadFile *readFile = new ReadFile();
 //    readFile->readFile("text-file.txt");
@@ -15,6 +15,8 @@ int main() {
 //    }else{
 //        return 0;
 //    }
+
+    //Tree <WordList *> *tree = new Tree<WordList *>();
     std::ifstream is ("text-file.txt", std::ifstream::binary);
     WordList *list = new WordList();
     std::istream& s = is;

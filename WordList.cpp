@@ -3,6 +3,14 @@
 //
 
 #include "WordList.h"
+#include "TreeNode.h"
+
+#include <iostream>
+#include <algorithm>
+#include <cctype>
+#include <cwctype>
+
+static Tree<WordList> tree;
 //#include <vector>
 
 const int MAX_STRING_LENGTH = 1024; //i doubt there are words in the english alphabet longer thatn 1024 characters.
@@ -12,14 +20,38 @@ const char CHAR_UCASE_Z = 90;
 const char CHAR_LCASE_A = 97;
 const char CHAR_LCASE_Z = 122;
 
-static BinaryTree *tree;
-
 WordList::WordList() {
-    tree = new BinaryTree();
+    //WordList::tree = tree;
+    WordList::lineList = nullptr;
 }
 
+
 WordList::~WordList() {
-    delete[] tree;
+
+}
+
+//bool caseInsCharCompareN(char a, char b) {
+//    return(toupper(a) == toupper(b));
+//}
+//
+//bool caseInsCompare(const std::string& s1, const std::string& s2) {
+//return((s1.size() == s2.size()) &&
+//    std::equal(s1.begin(), s1.end(), s2.begin(), caseInsCharCompareN));
+//}
+
+bool WordList::operator<(WordList const &wordList) {
+    int r = std::strcmp(word->c_str(), wordList.word->c_str());
+    return r < 0;
+}
+
+bool WordList::operator>(WordList const &wordList) {
+    int r = std::strcmp(word->c_str(), wordList.word->c_str());
+    return r > 0;
+}
+
+bool WordList::operator==(WordList const &wordList) {
+    int r = std::strcmp(word->c_str(), wordList.word->c_str());
+    return r == 0;
 }
 
 std::istream &operator>>(std::istream &in, WordList &WL) {
@@ -45,8 +77,9 @@ std::istream &operator>>(std::istream &in, WordList &WL) {
                     std::string *s = new std::string(word);
                     word = new char[MAX_STRING_LENGTH];
                     WordList *wl = new WordList();
-                    wl->word = s;
-                    tree->addLeaf(wl);
+                    wl->setWord(s);
+                    WordList *w = tree.insert(wl);
+                    w->addLine(line);
                     delete[] word;
                 }
                 if (letter == '\n') line++;
@@ -57,20 +90,58 @@ std::istream &operator>>(std::istream &in, WordList &WL) {
 //    for(std::string *s : *words) {
 //        std::cout << *s << '\n';
 //    }
+    //tree.print();
+    WL.printWords();
     std::cout << '\n';
     return in;
 }
 
-bool WordList::operator<(Object const &object) {
-    return Object::operator<(object);
+void printLine(SinglyLinkedList *list) {
+    if (list == nullptr) {
+    } else {
+        std::cout << list->getLine() << ", ";
+        printLine(list->getNext());
+    }
+
 }
 
-bool WordList::operator>(Object const &object) {
-    return Object::operator>(object);
+void printWord(TreeNode<WordList> *node) {
+    //std::cout << "cnode: " << *node->data->word << '\n';
+    if (node->left != nullptr) printWord(node->left);
+    std::cout << *node->data->getWord() << ':';
+    printLine(node->data->lineList);
+    std::cout << '\n';
+    if (node->right != nullptr) printWord(node->right);
 }
 
-bool WordList::operator==(Object const &object) {
-    return Object::operator==(object);
+void WordList::printWords() {
+    printWord(tree.root);
 }
 
+void WordList::addLine(int line) {
+    if (WordList::lineList == nullptr) {
+        WordList::lineList = new SinglyLinkedList(line);
+    } else {
+        bool isLineInList = false;
+        SinglyLinkedList * tail = nullptr;
+        for (SinglyLinkedList *current = WordList::lineList; current != nullptr; current = current->getNext()) {
+            if (current->getLine() == line) {
+                isLineInList = true;
+                break; //exit the loop
+            }
+            tail = current;
+        }
+        if (!isLineInList) {
+            tail->addLine(tail, line);
+        }
+    }
+}
 
+std::string *WordList::getWord() const {
+    return word;
+}
+
+void WordList::setWord(std::string *word) {
+    std::transform(word->begin(), word->end(), word->begin(), ::tolower);
+    WordList::word = word;
+}
